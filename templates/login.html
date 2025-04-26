@@ -5,12 +5,17 @@
   </head>
   <body>
     <form method="post" action="/login">
+      <!-- CSRF token -->
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
       <label for="username">Username</label>
-      <input name="username" type="text" />
+      <input name="username" type="text" required />
       <label for="password">Password</label>
-      <input name="password" type="password" />
+      <input name="password" type="password" required />
       <input type="submit" value="Login" />
     </form>
-    {% if error %}<em>{{ error }}</em>{% endif %}
+
+    {% if error %}
+      <p style="color:red;"><em>{{ error }}</em></p>
+    {% endif %}
   </body>
 </html>

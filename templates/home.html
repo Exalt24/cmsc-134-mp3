@@ -4,20 +4,28 @@
     <title>Home</title>
   </head>
   <body>
-    <h2>Welcome, {{username}}!</h2>
-    <a href="/logout">Logout</a>
+    <h2>Welcome, {{ username }}!</h2>
+    <form method="get" action="/logout" style="display:inline;">
+      <button type="submit">Logout</button>
+    </form>
+
     <h3>Posts</h3>
     <form method="post" action="/posts">
-      <input type="text" name="message">
+      <!-- CSRF token -->
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <input type="text" name="message" required>
       <input type="submit" value="Post!">
     </form>
+
     <ul>
       {% if not posts %}
-      No posts.
+        <li>No posts.</li>
+      {% else %}
+        {% for post in posts %}
+          <!-- Safe escaping is automatic: no |safe -->
+          <li>{{ post[0] }}</li>
+        {% endfor %}
       {% endif %}
-      {% for post in posts %}
-      <li>{{ post[0] | safe }}</li>
-      {% endfor %}
     </ul>
   </body>
 </html>
